@@ -14,3 +14,10 @@ For info (Swedish) about the layout A5, visit http://aoeu.info/s/dvorak/svorak (
 
 There are no ways to configure this thing at this moment so probably of less usage for non-Swedish people.
 
+System should have "Swedish Pro" (built-in Mac OS X) set as the current keyboard layout.
+Dvoracle also supports the Windows style copy/paste Ctrl+Ins, Shift+Ins and Shift+Del commands. 
+This is to support the excellent Typematrix (http://typematrix.com/2030/features.php) keyboard's easy access buttons. 
+(Cmd+C/V/X are not as easily accessed on Dvorak)
+Adds Home and End behavior as on PC.
+
+
