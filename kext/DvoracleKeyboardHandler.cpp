@@ -85,8 +85,6 @@ namespace com_phogy_Dvoracle
 	{
 		if (pKbd && IsValidKeyboardType(pKbd->getName()))
 		{
-			IOLog("Dvoracle found keyboard: %s\n", pKbd->getName());
-			
             for (int i = 0; i < MAX_KEYBOARDS; i++)
             {
                 if (!m_keyboards[i].pKbd)
@@ -102,38 +100,45 @@ namespace com_phogy_Dvoracle
                     //IOLog("Keyboard event action hooked at %d (orig=%08X new=%08X) pKbd = %08X\n",
                     //    i, m_keyboards[i].originalEventAction,
                     //    pKbd->_keyboardEventAction, m_keyboards[i].pKbd);
+                    IOLog("Dvoracle VERBOSE: [StartKeyboard] Mapped new keyboard: %s\n", pKbd->getName());
                     break;
                 } 
                 else if (m_keyboards[i].pKbd == pKbd)
                 {
-                    IOLog("Dvoracle WARNING: Keyboard appears again: %s\n", pKbd->getName());
+                    IOLog("Dvoracle WARNING: [StartKeyboard] Keyboard appears again: %s\n", pKbd->getName());
                     break;
                 }
             }
 		}
 		else
 		{
-			//IOLog("Dvoracle ERROR: Unsupported Keyboard type: %s\n", pKbd ? pKbd->getName() : "(None)");
+			IOLog("Dvoracle VERBOSE: [StartKeyboard] Unsupported Keyboard: %s\n", pKbd ? pKbd->getName() : "(None)");
 		}
 	}
 	
-	
+    
 	void DvoracleKeyboardHandler::StopKeyboard(IOHIKeyboard *pKbd)
 	{
-        IOLog("StopKeyboard+++\n");
-        for (int i = 0; i < MAX_KEYBOARDS; i++)
+        if (pKbd && IsValidKeyboardType(pKbd->getName()))
         {
-            if (pKbd && m_keyboards[i].pKbd == pKbd)
+            for (int i = 0; i < MAX_KEYBOARDS; i++)
             {
-                
-                pKbd->_keyboardEventAction = m_keyboards[i].originalEventAction;
-                IOLog("Dvoracle Stopped keyboard type: %s (%08X)\n", pKbd->getName(),
-                    pKbd->_keyboardEventAction); 
-                return;
+                if (pKbd && m_keyboards[i].pKbd == pKbd)
+                {
+                    
+                    pKbd->_keyboardEventAction = m_keyboards[i].originalEventAction;
+                    IOLog("Dvoracle VERBOSE: [StopKeyboard] Stopped keyboard: %s (%p)\n", pKbd->getName(),
+                        pKbd->_keyboardEventAction); 
+                    return;
+                }
             }
-        } 
-	
-        IOLog("Dvoracle ERROR: Cannot find the keyboard to stop: %s\n", pKbd ? pKbd->getName() : "(None)");
+            
+            IOLog("Dvoracle ERROR: [StopKeyboard] Cannot find the keyboard to stop: %s\n", pKbd ? pKbd->getName() : "(None)");
+        }
+        else
+        {
+            IOLog("Dvoracle VERBOSE: [StopKeyboard] Unsupported keyboard: %s\n", pKbd ? pKbd->getName() : "(None)");
+        }
 	}
     
     void DvoracleKeyboardHandler::StopAllKeyboards()
@@ -143,7 +148,7 @@ namespace com_phogy_Dvoracle
             if (m_keyboards[i].pKbd)
             {
                 m_keyboards[i].pKbd->_keyboardEventAction = m_keyboards[i].originalEventAction;
-                IOLog("Dvoracle Stopped keyboard type: %s (%08X)\n", m_keyboards[i].pKbd->getName(),
+                IOLog("Dvoracle VERBOSE: [StopAllKeyboards] Stopped keyboard: %s (%p)\n", m_keyboards[i].pKbd->getName(),
                     m_keyboards[i].pKbd->_keyboardEventAction); 
             }
         }
@@ -151,7 +156,7 @@ namespace com_phogy_Dvoracle
     
     void DvoracleKeyboardHandler::HandleEvent(KeybEvent& event)
     {
-        //IOLog("HandleEvent+++\n");
+        //IOLog("Dvoracle HandleEvent+++\n");
         KeybEntry *pCurrentKeyb = FindCurrentKeybEntry();
         
         if (pCurrentKeyb)
@@ -189,7 +194,7 @@ namespace com_phogy_Dvoracle
             }
             while (isMoreInSequence && sequenceIndex < MAX_SEQUENCE);
         }
-        //IOLog("HandleEvent---\n");
+        //IOLog("Dvoracle HandleEvent---\n");
         
     }
 
@@ -206,7 +211,7 @@ namespace com_phogy_Dvoracle
                     /* repeat */           bool       repeat,
                     /* atTime */           AbsoluteTime ts)
     {
-        //IOLog("event+++\n");
+        //IOLog("Dvoracle event+++\n");
         KeybEvent keybEvent;
         keybEvent.target = target;
         keybEvent.eventType = eventType;
@@ -221,7 +226,7 @@ namespace com_phogy_Dvoracle
         keybEvent.ts = ts;
 
         DvoracleKeyboardHandler::GetInstance()->HandleEvent(keybEvent);
-        //IOLog("event---\n");
+        //IOLog("Dvoracle event---\n");
     }
 }
 

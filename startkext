@@ -1,3 +1,9 @@
 #!/bin/bash
-sudo cp -R kext/build/Release/Dvoracle.kext /tmp
+
+sudo cp -R kext/DerivedData/Dvoracle/Build/Products/Release/Dvoracle.kext /tmp
+sudo chown -R root /tmp/Dvoracle.kext
+sudo chgrp -R wheel /tmp/Dvoracle.kext
+sudo chmod a+x /tmp/Dvoracle.kext
 sudo kextload -t /tmp/Dvoracle.kext
+tail -f /var/log/system.log
+
