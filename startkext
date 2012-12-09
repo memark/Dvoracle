@@ -1,9 +1,9 @@
 #!/bin/bash
 
-sudo cp -R kext/DerivedData/Dvoracle/Build/Products/Release/Dvoracle.kext /tmp
-sudo chown -R root /tmp/Dvoracle.kext
-sudo chgrp -R wheel /tmp/Dvoracle.kext
-sudo chmod a+x /tmp/Dvoracle.kext
-sudo kextload -t /tmp/Dvoracle.kext
+sudo cp -R kext/DerivedData/Dvoracle/Build/Products/Release/Dvoracle.kext /Library/StartupItems/Dvoracle/
+sudo chown -R root /Library/StartupItems/Dvoracle/Dvoracle.kext
+sudo chgrp -R wheel /Library/StartupItems/Dvoracle/Dvoracle.kext
+sudo chmod a+x /Library/StartupItems/Dvoracle/Dvoracle.kext
+sudo kextload -t /Library/StartupItems/Dvoracle/Dvoracle.kext
 tail -f /var/log/system.log
 

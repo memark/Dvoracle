@@ -100,7 +100,7 @@ namespace com_phogy_Dvoracle
                     //IOLog("Keyboard event action hooked at %d (orig=%08X new=%08X) pKbd = %08X\n",
                     //    i, m_keyboards[i].originalEventAction,
                     //    pKbd->_keyboardEventAction, m_keyboards[i].pKbd);
-                    IOLog("Dvoracle VERBOSE: [StartKeyboard] Mapped new keyboard: %s\n", pKbd->getName());
+                    IOLog("Dvoracle VERBOSE: [StartKeyboard] Mapped new keyboard[%d]: %s\n", i, pKbd->getName());
                     break;
                 } 
                 else if (m_keyboards[i].pKbd == pKbd)
@@ -127,8 +127,13 @@ namespace com_phogy_Dvoracle
                 {
                     
                     pKbd->_keyboardEventAction = m_keyboards[i].originalEventAction;
-                    IOLog("Dvoracle VERBOSE: [StopKeyboard] Stopped keyboard: %s (%p)\n", pKbd->getName(),
-                        pKbd->_keyboardEventAction); 
+                    
+                    IOLog("Dvoracle VERBOSE: [StopKeyboard] Stopped keyboard[%d]: %s (%p)\n", i, pKbd->getName(),
+                        pKbd->_keyboardEventAction);
+                    
+                    // Mark our used slot as free again
+                    m_keyboards[i].pKbd = NULL;
+                    
                     return;
                 }
             }
@@ -148,8 +153,12 @@ namespace com_phogy_Dvoracle
             if (m_keyboards[i].pKbd)
             {
                 m_keyboards[i].pKbd->_keyboardEventAction = m_keyboards[i].originalEventAction;
+                
                 IOLog("Dvoracle VERBOSE: [StopAllKeyboards] Stopped keyboard: %s (%p)\n", m_keyboards[i].pKbd->getName(),
-                    m_keyboards[i].pKbd->_keyboardEventAction); 
+                      m_keyboards[i].pKbd->_keyboardEventAction);
+                
+                // Mark slot as free
+                m_keyboards[i].pKbd = NULL;
             }
         }
     }

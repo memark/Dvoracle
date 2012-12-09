@@ -40,13 +40,13 @@
 
 	void Dvoracle::free(void)
 	{
-		//IOLog("free+++\n");
+		//IOLog("Dvoracle free+++\n");
 		
 		delete DvoracleKeyboardHandler::GetInstance();
         delete DvoracleRemapper::GetInstance();
 		
 		super::free();
-		//IOLog("free---\n");
+		//IOLog("Dvoracle free---\n");
 	}
 
 	IOService *Dvoracle::probe(IOService *provider, SInt32 *score)
@@ -95,8 +95,8 @@
 
 	void Dvoracle::stop(IOService *provider)
 	{
-		//IOLog("stop+++\n");
-        
+		//IOLog("Dvoracle stop+++\n");
+        IOLog("Dvoracle VERBOSE: Service stop requested.\n");
         DvoracleKeyboardHandler::GetInstance()->StopAllKeyboards();
 		
 		// Cancel all notifications
@@ -111,7 +111,7 @@
 
 		super::stop(provider);
 		
-		//IOLog("stop---\n");
+		//IOLog("Dvoracle stop---\n");
 	}
 	
 	// Called when a IOHIKeyboard has been matched

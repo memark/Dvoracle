@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo kextunload /tmp/Dvoracle.kext
+sudo kextunload /Library/StartupItems/Dvoracle/Dvoracle.kext
