@@ -61,6 +61,11 @@ namespace com_phogy_Dvoracle
     void DvoracleRemapper::Remap(KeybEvent& event, bool &isMoreInSequence, unsigned sequenceIndex)
     {
         HandleModeSelector(event, isMoreInSequence, sequenceIndex);
+        
+        if (m_mode == ALL_QWERTY_MODE)
+        {
+            return; // All Qwerty means bypass now.
+        }
     
         // Remap Copy, cut and paste on TypeMatrix
         RemapWindowsCopyPaste(event, isMoreInSequence, sequenceIndex);
